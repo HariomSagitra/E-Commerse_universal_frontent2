@@ -56,7 +56,8 @@
 export const C_URL = "http://localhost:3000/"
 //const BASE_URL = "http://localhost:5000/"
 
-const BASE_URL = process.env.REACT_APP_API_URL + "/";
+//const BASE_URL = process.env.REACT_APP_API_URL + "/";
+const BASE_URL = "https://e-commerse-universal-backend-1.onrender.com/";
 export const PRODUCT_LIST = BASE_URL + "allproduct"
 export const REGISTER =  BASE_URL + "register"
 export const LOGIN =  BASE_URL + "login"

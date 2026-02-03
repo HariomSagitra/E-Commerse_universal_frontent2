@@ -53,7 +53,7 @@
 
 
 
-export const C_URL = "http://localhost:3000/"
+//export const C_URL = "http://localhost:3000/"
 //const BASE_URL = "http://localhost:5000/"
 
 //const BASE_URL = process.env.REACT_APP_API_URL + "/";

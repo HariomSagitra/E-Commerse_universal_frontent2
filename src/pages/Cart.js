@@ -325,13 +325,15 @@ const Cart = () => {
                               "https://cdn-icons-png.flaticon.com/512/2748/2748558.png";
                           }}
                         /> */}
-                        <img
-                          src={cart.product_imageurl?.[0]?.path}
-                          alt="IMG"
-                          onError={(e) =>
-                            (e.target.src = "https://via.placeholder.com/150")
-                          }
-                        />
+<img
+  src={cart.product_imageurl}
+  alt="IMG"
+  style={{ width: 80 }}
+  onError={(e) => {
+    e.target.src = "https://via.placeholder.com/150";
+  }}
+/>
+
                       </td>
 
                       <td>

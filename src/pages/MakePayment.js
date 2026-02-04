@@ -1,8 +1,11 @@
 import React from 'react'
 import axios from 'axios'
 import Header from '../components/Header'
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import Footer from '../components/Footer';
+import { useLocation } from 'react-router-dom'
+import Footer from '../components/Footer'
+
+// ✅ CHANGE THIS TO YOUR REAL BACKEND URL
+const BACKEND_URL = "https://e-commerce-universal-backend.onrender.com";
 
 export default function MakePayment() {
 
@@ -11,55 +14,73 @@ export default function MakePayment() {
     const checkoutHandler = async (amount) => {
         try {
 
-            const { data: { key } } = await axios.get("http://www.localhost:5000/customer/getkey")
+            // 🔑 1️⃣ GET RAZORPAY KEY
+            const { data } = await axios.get(
+                `${BACKEND_URL}/customer/getkey`
+            );
 
-            const { data: { order } } = await axios.post("http://localhost:5000/customer/checkout", {
-                amount
-            })
+            const key = data.key;
 
-            console.log("Order:", order)
+            // 💰 2️⃣ CREATE ORDER
+            const orderResponse = await axios.post(
+                `${BACKEND_URL}/customer/checkout`,
+                { amount }
+            );
 
+            const order = orderResponse.data.order;
+            console.log("Order:", order);
+
+            // 💳 3️⃣ RAZORPAY OPTIONS
             const options = {
-                key,
+                key: key,
                 amount: order.amount,
                 currency: "INR",
                 name: "Videh Jaiswal",
                 description: "Tutorial of RazorPay",
                 image: "https://avatars.githubusercontent.com/u/75520279?v=4",
                 order_id: order.id,
-                callback_url: "http://localhost:5000/customer/paymentverification",
+
+                // ❌ localhost hata diya
+                // ✅ live backend callback
+                callback_url: `${BACKEND_URL}/customer/paymentverification`,
+
                 prefill: {
                     name: "Videh Jaiswal",
                     email: "videhjaiswal@example.com",
                     contact: "9999999999"
                 },
                 notes: {
-                    "address": "Razorpay Corporate Office"
+                    address: "Razorpay Corporate Office"
                 },
                 theme: {
-                    "color": "#121212"
+                    color: "#121212"
                 }
             };
-            console.log(options)
-            console.log("window:",window)
+
+            console.log("Razorpay Options:", options);
+
             const razor = new window.Razorpay(options);
-            console.log(razor)
             razor.open();
 
         } catch (error) {
-            console.log(error)
+            console.error("Payment Error:", error);
+            alert("Payment failed. Please try again.");
         }
-    }
+    };
 
-    
     return (
         <div>
             <Header />
-            <h1 style={{marginTop:60}}>Make Payment</h1>
-            <button className="btn btn-sm btn-success"
+            <h1 style={{ marginTop: 60 }}>Make Payment</h1>
+
+            <button
+                className="btn btn-sm btn-success"
                 onClick={() => checkoutHandler(location.state)}
-            >Pay ₹ {location.state} with Razorpay</button>
+            >
+                Pay ₹ {location.state} with Razorpay
+            </button>
+
             <Footer />
         </div>
-    )
+    );
 }

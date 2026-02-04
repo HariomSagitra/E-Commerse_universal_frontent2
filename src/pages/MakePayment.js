@@ -5,7 +5,8 @@ import { useLocation } from 'react-router-dom'
 import Footer from '../components/Footer'
 
 // ✅ CHANGE THIS TO YOUR REAL BACKEND URL
-const BACKEND_URL = "https://e-commerce-universal-backend.onrender.com";
+//const BACKEND_URL = "https://e-commerce-universal-backend.onrender.com";
+const BACKEND_URL = "https://e-commerse-universal-backend.onrender.com";
 
 export default function MakePayment() {
 

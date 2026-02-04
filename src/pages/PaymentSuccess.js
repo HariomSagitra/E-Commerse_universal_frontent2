@@ -153,7 +153,10 @@ const PaymentSuccess = () => {
 
           <button
             style={{ marginTop: 20 }}
-            onClick={() => navigate("/customer/orders")}
+            <button onClick={() => navigate("/customer/orders")}>
+  View My Orders
+</button>
+
           >
             View My Orders
           </button>
